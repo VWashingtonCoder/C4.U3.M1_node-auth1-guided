@@ -10,7 +10,7 @@
 
 const bcrypt = require('bcryptjs');
 
-bcrypt.hash('asdf')
+bcrypt.hash('asdf', 8)
   .then(result => {
     console.log(result);
   })
