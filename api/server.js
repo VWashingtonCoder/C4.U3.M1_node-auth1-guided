@@ -1,9 +1,23 @@
 const path = require('path')
 const express = require('express')
+const session = require('express-session');
 
 const usersRouter = require('./users/users-router.js')
 
 const server = express()
+
+const sessionConfig = {
+  secret: 'ILAEFBiulWAFYVIsvyeif',
+  cookie: {
+    maxAge: 1000 * 60 * 2,
+    secure: false,
+    httpOnly: true,
+  },
+  resave: false,
+  saveUninitialized: false,
+};
+
+server.use(session(sessionConfig));
 
 server.use(express.static(path.join(__dirname, '../client')))
 server.use(express.json())
