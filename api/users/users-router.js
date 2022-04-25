@@ -27,7 +27,7 @@ router.post('/login', async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
-    const user = Users.findBy({ username });
+    const user = await Users.findBy({ username }).first();
     if(user == null) {
       res.status(401).json('invalid credentials');
       return;
