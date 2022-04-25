@@ -1,6 +1,6 @@
-const router = require("express").Router()
+const router = require("express").Router();
 
-const Users = require("./users-model.js")
+const Users = require("./users-model.js");
 
 router.get("/", (req, res, next) => {
   Users.find()
@@ -8,6 +8,10 @@ router.get("/", (req, res, next) => {
       res.status(200).json(users)
     })
     .catch(next)
-})
+});
+
+// router.post('/register', (req, res, next) => {
+
+// })
 
 module.exports = router
