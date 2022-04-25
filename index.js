@@ -10,5 +10,6 @@
 
 const bcrypt = require('bcryptjs');
 
-let result = bcrypt.hashSync('asdf', 9);
+console.log('hashing...');
+let result = bcrypt.hashSync('asdf', 16);
 console.log(result);
