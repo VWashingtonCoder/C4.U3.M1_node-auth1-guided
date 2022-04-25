@@ -44,6 +44,10 @@ router.post('/login', async (req, res, next) => {
   } catch(err) {
     next(err);
   }
-})
+});
+
+router.get('/asdf', (req, res) => {
+  res.json(req.session);
+});
 
 module.exports = router
