@@ -11,8 +11,17 @@ router.get("/", (req, res, next) => {
     .catch(next)
 });
 
-// router.post('/register', (req, res, next) => {
-
-// })
+router.post('/register', async (req, res, next) => {
+  try {
+    throw Error('blah blah');
+    const { username, password } = req.body;
+    const hash = bcrypt.hashSync(password, 12);
+    const user = { username, password: hash };
+    await Users.add(user);
+    res.status(201).json({ message: `You are now logged in, ${username}` });
+  } catch(err) {
+    next(err);
+  }
+})
 
 module.exports = router
