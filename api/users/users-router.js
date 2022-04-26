@@ -3,7 +3,15 @@ const bcrypt = require('bcryptjs');
 
 const Users = require("./users-model.js");
 
-router.get("/", (req, res, next) => {
+function protected(req, res, next) {
+  if(req.session.user){
+    next();
+  } else {
+    next({ status: 400, message: 'you must be logged in to access this endpoint' })
+  }
+}
+
+router.get("/", protected, (req, res, next) => {
   Users.find()
     .then(users => {
       res.status(200).json(users)
@@ -45,6 +53,20 @@ router.post('/login', async (req, res, next) => {
     next(err);
   }
 });
+
+router.get('/logout', (req, res, next) => {
+  if(req.session.user) {
+    req.session.destroy(err => {
+      if(err !== null) {
+        next(err);
+        return;
+      }
+      res.status(200).json({ message: 'You are now logged out' })
+    })
+  } else {
+    res.status(200).json({ message: 'you were already logged out' })
+  }
+})
 
 router.get('/asdf', (req, res) => {
   res.json(req.session);

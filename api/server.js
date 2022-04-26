@@ -1,8 +1,8 @@
 const path = require('path')
 const express = require('express')
 const session = require('express-session');
-
-const usersRouter = require('./users/users-router.js')
+const usersRouter = require('./users/users-router.js');
+const KnexSessionStore = require('connect-session-knex')(session);
 
 const server = express()
 
@@ -15,6 +15,14 @@ const sessionConfig = {
   },
   resave: false,
   saveUninitialized: false,
+
+  store: new KnexSessionStore({
+    knex: require('../database/db-config'),
+    tablename: 'sessions',
+    sidfieldname: 'sid',
+    createtable: true,
+    clearInterval: 1000 * 60 * 60,
+  })
 };
 
 server.use(session(sessionConfig));
